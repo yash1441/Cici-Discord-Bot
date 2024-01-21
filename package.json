@@ -1,0 +1,23 @@
+{
+  "name": "cici-discord-bot",
+  "version": "1.0.0",
+  "description": "A discord bot for the Cici server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yash1441/Cici-Discord-Bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yash1441/Cici-Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/yash1441/Cici-Discord-Bot#readme",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.2"
+  }
+}
