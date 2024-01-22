@@ -1,11 +1,13 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
-require("dotenv").config();
+require('dotenv').config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
+client.buttons = new Collection();
+client.selectmenus = new Collection();
 client.cooldowns = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
@@ -23,6 +25,40 @@ for (const folder of commandFolders) {
             console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
         }
     }
+}
+
+const componentFoldersPath = path.join(__dirname, 'components');
+const componentFolders = fs.readdirSync(componentFoldersPath);
+
+for (const folder of componentFolders) {
+    const componentPath = path.join(componentFoldersPath, folder);
+
+    if (folder === 'buttons') {
+        const buttonFiles = fs.readdirSync(componentPath).filter(file => file.endsWith('.js'));
+        for (const file of buttonFiles) {
+            const filePath = path.join(componentPath, file);
+            const button = require(filePath);
+            if ('data' in button && 'execute' in button) {
+                client.buttons.set(button.data.name, button);
+                console.log(`[INFO] Button ${button.data.name} loaded.`);
+            } else {
+                console.log(`[WARNING] The button at ${filePath} is missing a required "data" or "execute" property.`);
+            }
+        }
+    }
+    // } else if (folder === 'selectmenus') {
+    //     const selectMenuFiles = fs.readdirSync(componentPath).filter(file => file.endsWith('.js'));
+    //     for (const file of selectMenuFiles) {
+    //         const filePath = path.join(componentPath, file);
+    //         const selectMenu = require(filePath);
+    //         if ('data' in selectMenu && 'execute' in selectMenu) {
+    //             client.selectmenus.set(selectMenu.data.name, selectMenu);
+    //             console.log(`[INFO] Select Menu ${selectMenu.data.name} loaded.`);
+    //         } else {
+    //             console.log(`[WARNING] The select menu at ${filePath} is missing a required "data" or "execute" property.`);
+    //         }
+    //     }
+    // }
 }
 
 const eventsPath = path.join(__dirname, 'events');
