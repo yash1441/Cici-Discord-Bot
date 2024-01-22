@@ -7,7 +7,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 client.buttons = new Collection();
-client.selectmenus = new Collection();
+// client.selectmenus = new Collection();
 client.cooldowns = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
