@@ -88,9 +88,9 @@ module.exports = {
         if (emoji) button.setEmoji(emoji);
 
         const row = new ActionRowBuilder()
-        .addComponents(button);
+            .addComponents(button);
 
-    await interaction.editReply({ components: [row] });
-
-},
+        await interaction.channel.send({ components: [row] });
+        await interaction.deleteReply();
+    },
 };
