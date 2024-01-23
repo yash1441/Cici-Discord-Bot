@@ -7,6 +7,8 @@ module.exports = {
 		.setName('ping')
 		.setDescription('Replies with Pong!'),
 	async execute(interaction) {
-		await interaction.reply('Pong!');
+		const reply = await interaction.deferReply({ ephemeral: true, fetchReply: true });
+
+		await interaction.editReply({ content: 'API Latency: ' + interaction.client.ws.ping + '\nClientPing: ' + (reply.createdTimestamp - interaction.createdTimestamp).toString() })
 	},
 };
