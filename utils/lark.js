@@ -39,7 +39,7 @@ async function listRecords(app_token, table_id, parameters = null, id = process.
     };
 
     if (parameters) {
-        options.qs = parameters;
+        options.params = parameters;
     }
 
     const response = await axios(options).catch((error) => console.error(error));
@@ -67,7 +67,7 @@ async function createRecord(app_token, table_id, body, parameters = null, id = p
     };
 
     if (parameters) {
-        options.qs = parameters;
+        options.params = parameters;
     }
 
     const response = await axios(options).catch((error) => console.error(error));
@@ -95,7 +95,7 @@ async function updateRecord(app_token, table_id, record_id, body, parameters = n
     };
 
     if (parameters) {
-        options.qs = parameters;
+        options.params = parameters;
     }
 
     const response = await axios(options).catch((error) => console.error(error));
