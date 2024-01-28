@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
-    category: 'utility',
+    category: 'moderation',
     data: new SlashCommandBuilder()
         .setName('button')
         .setDescription('Create a button with specified properties')
@@ -42,6 +42,11 @@ module.exports = {
             option.setName('emoji')
                 .setDescription('The Emoji of the button')
                 .setRequired(false)
+        )
+        .addStringOption((option) =>
+            option.setName('message-id')
+                .setDescription('The id of the message to attach a button to')
+                .setRequired(false)
         ),
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: false });
@@ -52,6 +57,7 @@ module.exports = {
         const url = interaction.options.getString('url') ?? 'https://y-gaming.in/';
         const disabled = interaction.options.getBoolean('disabled') ?? false;
         const emoji = interaction.options.getString('emoji') ?? null;
+        const messageId = interaction.options.getString('message-id') ?? null;
 
         const button = new ButtonBuilder().setLabel(label);
 
@@ -90,7 +96,15 @@ module.exports = {
         const row = new ActionRowBuilder()
             .addComponents(button);
 
-        await interaction.channel.send({ components: [row] });
         await interaction.deleteReply();
+
+        if (messageId) {
+            const message = await interaction.channel.messages.fetch(messageId);
+            if (message.author.id == process.env.BOT_ID) {
+                return await message.edit({ components: [row] });
+            }
+        }
+
+        await interaction.channel.send({ components: [row] });
     },
 };
