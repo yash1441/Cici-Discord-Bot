@@ -39,7 +39,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle(title)
-            .setDescription(description)
+            .setDescription(description.split('\\n').join('\n'))
             .setColor(color);
 
         await interaction.channel.send({ embeds: [embed] });
