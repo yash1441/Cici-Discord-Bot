@@ -35,7 +35,7 @@ module.exports = {
 
         const title = interaction.options.getString('title') ?? 'Title';
         const description = interaction.options.getString('description') ?? 'Description';
-        const color = interaction.options.getString('style') ?? process.env.EMBED_COLOR;
+        const color = interaction.options.getString('color') ?? process.env.EMBED_COLOR;
 
         const embed = new EmbedBuilder()
             .setTitle(title)
