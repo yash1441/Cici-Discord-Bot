@@ -56,11 +56,11 @@ module.exports = {
 
             if (!modalReply) return;
 
-            await modalReply.reply({ content: bold(modal.data.title) + '\n' + codeBlock(modalReply.fields.getTextInputValue('description')), ephemeral: true })
+            await modalReply.reply({ content: bold(modal.data.title), ephemeral: true })
 
             await modalReply.deleteReply();
 
-            await interaction.editReply({ content: 'Your suggestion has been submitted. Please wait for an admin to approve or deny it. If approved, it should be visible in ' + channelMention(process.env.VOTE_SUGGESTION_ID) + ' shortly.\n\n' + bold(modal.data.title) + '\n' + codeBlock(modalReply.fields.getTextInputValue('description')) });
+            await interaction.editReply({ content: 'Your suggestion has been submitted. Please wait for an admin to approve or deny it. If approved, it should be visible in ' + channelMention(process.env.VOTE_SUGGESTION_ID) + ' shortly.\n\n' + bold(modal.data.title) + '\n' + codeBlock((modalReply.fields.getTextInputValue('description').length < 2000) ? modalReply.fields.getTextInputValue('description') : (modalReply.fields.getTextInputValue('description').slice(0, 1000) + '...') )  });
 
             collector.stop();
 
