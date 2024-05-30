@@ -65,6 +65,10 @@ module.exports = {
             collector.stop();
 
             await sendSuggestionAdmin(modalReply, modal.data.title);
+            
+            if (category === 'Early Tester') {
+                await interaction.member.roles.add(process.env.EARLY_TESTER_ROLE);
+            }
         });
 
         collector.on('end', (collected, reason) => {
